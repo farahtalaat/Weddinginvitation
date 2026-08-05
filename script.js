@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.save();
                 ctx.translate(p.x, p.y);
                 ctx.rotate(p.angle);
-                ctx.fillStyle = `rgba(200, 169, 81, ${p.opacity})`;
+                ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
                 ctx.beginPath();
                 ctx.ellipse(0, 0, p.size, p.size / 2, 0, 0, Math.PI * 2);
                 ctx.fill();
@@ -63,66 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         animatePetals();
-    }
-
-    // ----------------------------------------------------------------------
-    // 2. YOUTUBE PLAYER — Perfect by Ed Sheeran
-    // ----------------------------------------------------------------------
-    const musicBtn = document.getElementById('music-toggle-btn');
-    let ytPlayer = null;
-    let isPlaying = false;
-
-    window.onYouTubeIframeAPIReady = function () {
-        ytPlayer = new YT.Player('youtube-player', {
-            height: '0',
-            width: '0',
-            videoId: '2Vv-BfVoq4g',
-            playerVars: {
-                autoplay: 0,
-                loop: 1,
-                playlist: '2Vv-BfVoq4g',
-                controls: 0,
-                disablekb: 1,
-                fs: 0,
-                modestbranding: 1,
-                rel: 0
-            },
-            events: {
-                onReady: () => {
-                    if (musicBtn) musicBtn.title = 'Perfect — Ed Sheeran';
-                }
-            }
-        });
-    };
-
-    if (musicBtn) {
-        musicBtn.addEventListener('click', () => {
-            if (!ytPlayer || !ytPlayer.playVideo) {
-                showToast('Music is loading, please try again...');
-                return;
-            }
-
-            if (isPlaying) {
-                ytPlayer.pauseVideo();
-                musicBtn.classList.remove('playing');
-                showToast('Perfect — paused');
-            } else {
-                ytPlayer.playVideo();
-                musicBtn.classList.add('playing');
-                showToast('Playing Perfect — Ed Sheeran');
-            }
-            isPlaying = !isPlaying;
-        });
-
-        const handleFirstInteraction = () => {
-            if (!isPlaying && ytPlayer && ytPlayer.playVideo) {
-                ytPlayer.playVideo();
-                isPlaying = true;
-                musicBtn.classList.add('playing');
-            }
-            document.removeEventListener('click', handleFirstInteraction);
-        };
-        document.addEventListener('click', handleFirstInteraction, { once: true });
     }
 
     // ----------------------------------------------------------------------
@@ -241,23 +181,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
-    // 7. GUESTBOOK / WISHES WALL
+    // 7. GUESTBOOK / WISHES WALL (LOCAL STORAGE PERSISTENCE)
     // ----------------------------------------------------------------------
-    const WISHES_KEY = 'ahmed_sama_wishes';
+    const WISHES_KEY = 'ahmed_sama_wishes_v3';
     const wishesGrid = document.getElementById('wishes-grid');
     const wishesEmpty = document.getElementById('wishes-empty');
     const wishForm = document.getElementById('wish-form');
-    let wishIdCounter = parseInt(localStorage.getItem('ahmed_sama_wish_id') || '0', 10);
-
-    // Clear old default wishes on first load after update
-    const wishesVersion = localStorage.getItem('ahmed_sama_wishes_version');
-    if (wishesVersion !== '2') {
-        localStorage.setItem(WISHES_KEY, JSON.stringify([]));
-        localStorage.setItem('ahmed_sama_wishes_version', '2');
-    }
+    let wishIdCounter = parseInt(localStorage.getItem('ahmed_sama_wish_id_v3') || '100', 10);
 
     function getWishes() {
-        return JSON.parse(localStorage.getItem(WISHES_KEY)) || [];
+        const stored = localStorage.getItem(WISHES_KEY);
+        if (stored) {
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                console.error('Error parsing stored wishes', e);
+            }
+        }
+        // Default initial wishes if none exist
+        const initial = [
+            { id: 1, sender: "Family & Friends", message: "Wishing Ahmed & Sama a lifetime of endless love, happiness, and blessings! 💕", time: "Aug 1" }
+        ];
+        localStorage.setItem(WISHES_KEY, JSON.stringify(initial));
+        return initial;
     }
 
     function saveWishes(wishes) {
@@ -362,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!sender || !message) return;
 
             wishIdCounter += 1;
-            localStorage.setItem('ahmed_sama_wish_id', String(wishIdCounter));
+            localStorage.setItem('ahmed_sama_wish_id_v3', String(wishIdCounter));
 
             const wishes = getWishes();
             wishes.unshift({ id: wishIdCounter, sender, message, time: 'Just now' });
