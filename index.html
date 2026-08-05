@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed & Sama Wedding Invitation — August 13, 2026</title>
+    
+    <!-- Meta Descriptions & SEO -->
+    <meta name="description" content="Ahmed & Sama joyfully invite you to celebrate their wedding on Thursday, August 13, 2026 at the Artillery Officers Club. Join our celebration!">
+    <meta property="og:title" content="Ahmed & Sama Wedding Invitation">
+    <meta property="og:description" content="We request the pleasure of your company on our wedding day — Thursday, August 13, 2026">
+    <meta property="og:image" content="assets/venue.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="assets/venue.png">
+
+    <!-- Favicon & Tab Icon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/venue.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/venue.png">
+    <link rel="apple-touch-icon" href="assets/venue.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- QR Code & Confetti Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Music: Perfect — Ed Sheeran (YouTube) -->
+    <div id="youtube-player-wrap" class="youtube-player-wrap" aria-hidden="true">
+        <div id="youtube-player"></div>
+    </div>
+
+    <!-- Floating Audio Control & Quick Share Bar -->
+    <div class="floating-controls">
+        <button id="music-toggle-btn" class="control-btn" title="Toggle Music" aria-label="Audio player">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+            <span class="sound-waves" id="sound-waves">
+                <span></span><span></span><span></span>
+            </span>
+            <span class="btn-text">Perfect</span>
+        </button>
+
+        <button id="share-whatsapp-btn" class="control-btn whatsapp" title="Share on WhatsApp" aria-label="Share WhatsApp">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+            </svg>
+            <span class="btn-text">WhatsApp</span>
+        </button>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">AHMED &amp; SAMA</a>
+            <nav class="nav-links">
+                <a href="#hero">Home</a>
+                <a href="#countdown">Countdown</a>
+                <a href="#details">Details</a>
+                <a href="#location">Location</a>
+                <a href="#guestbook">Wishes</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Mobile Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <button class="close-drawer" id="close-drawer">&times;</button>
+        <a href="#hero" class="drawer-link">Home</a>
+        <a href="#countdown" class="drawer-link">Countdown</a>
+        <a href="#details" class="drawer-link">Event Details</a>
+        <a href="#location" class="drawer-link">Location</a>
+        <a href="#guestbook" class="drawer-link">Wishes Wall</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+        <canvas id="petals-canvas"></canvas>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <!-- Wedding Venue Card — Above Photo -->
+            <div class="hero-wedding-card">
+                <div class="wedding-card-ornament top">
+                    <span class="ornament-icon">✦</span>
+                </div>
+
+                <p class="wedding-card-tagline">We're Getting Married</p>
+
+                <h1 class="wedding-card-names">
+                    <span class="name groom">Ahmed</span>
+                    <span class="wedding-heart">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </span>
+                    <span class="name bride">Sama</span>
+                </h1>
+
+                <div class="wedding-card-divider">
+                    <span class="line"></span>
+                    <span class="diamond">◆</span>
+                    <span class="line"></span>
+                </div>
+
+                <p class="wedding-card-invite">Together with their families, joyfully invite you to celebrate their wedding at</p>
+
+                <div class="wedding-card-venue">
+                    <p class="venue-label">Venue</p>
+                    <h2 class="venue-name">Artillery Officers Club</h2>
+                    <p class="venue-ar">دار ضباط المدفعية</p>
+                    <p class="venue-location">Cairo, Egypt</p>
+                </div>
+
+                <div class="wedding-card-date">
+                    <span class="date-day">Thursday</span>
+                    <span class="date-sep">·</span>
+                    <span class="date-full">August 13, 2026</span>
+                    <span class="date-sep">·</span>
+                    <span class="date-time">7:00 PM</span>
+                </div>
+
+                <div class="wedding-card-ornament bottom">
+                    <span class="ornament-icon">✦</span>
+                </div>
+            </div>
+
+            <!-- Front Photo — Main Interface -->
+            <div class="hero-img-wrap">
+                <img src="assets/hero-front.png" alt="Ahmed & Sama Wedding Photo" id="hero-main-img">
+            </div>
+
+            <!-- Quranic Verse in Arabic -->
+            <p class="quran-verse">"وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"</p>
+
+            <p class="hero-subtagline">Two lives, two hearts, joined together in friendship, united forever in love</p>
+
+            <div class="hero-actions">
+                <a href="#location" class="btn btn-primary pulse">
+                    <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Event Location
+                </a>
+                <a href="#guestbook" class="btn btn-secondary">
+                    <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    Leave a Wish
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-down-indicator">
+            <a href="#countdown" aria-label="Scroll Down">
+                <span class="mouse-icon"></span>
+                <span class="chevron"></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- COUNTDOWN SECTION -->
+    <section id="countdown" class="countdown-section">
+        <div class="container">
+            <p class="section-title reveal">Counting Down</p>
+            <h2 class="section-subtitle reveal">Counting down until we say "I Do" · August 13, 2026</h2>
+            
+            <div class="countdown-grid reveal">
+                <div class="count-box">
+                    <span class="count-num" id="cd-days">00</span>
+                    <span class="count-label">Days</span>
+                </div>
+                <div class="count-box">
+                    <span class="count-num" id="cd-hours">00</span>
+                    <span class="count-label">Hours</span>
+                </div>
+                <div class="count-box">
+                    <span class="count-num" id="cd-mins">00</span>
+                    <span class="count-label">Minutes</span>
+                </div>
+                <div class="count-box">
+                    <span class="count-num" id="cd-secs">00</span>
+                    <span class="count-label">Seconds</span>
+                </div>
+            </div>
+
+            <!-- Add to Calendar Button -->
+            <div class="calendar-action reveal">
+                <button id="add-to-calendar-btn" class="btn btn-gold">
+                    <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/>
+                    </svg>
+                    Add to Calendar
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENT DETAILS SECTION -->
+    <section id="details" class="details-section">
+        <div class="container">
+            <p class="section-title reveal">Event Details</p>
+            <h2 class="section-subtitle reveal">We look forward to celebrating this magical evening with you</h2>
+
+            <div class="details-cards items-3">
+                <!-- Date Card -->
+                <div class="detail-card reveal">
+                    <div class="card-glass-glow"></div>
+                    <div class="detail-icon-wrap">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                            <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                        </svg>
+                    </div>
+                    <h3>Date</h3>
+                    <p class="highlight">Thursday, August 13, 2026</p>
+                    <p class="subtext">13 / 08 / 2026</p>
+                </div>
+
+                <!-- Time Card -->
+                <div class="detail-card reveal" style="transition-delay: 0.15s;">
+                    <div class="card-glass-glow"></div>
+                    <div class="detail-icon-wrap">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                    </div>
+                    <h3>Time</h3>
+                    <p class="highlight">7:00 PM</p>
+                    <p class="subtext">Evening Reception</p>
+                </div>
+
+                <!-- Venue Card -->
+                <div class="detail-card reveal" style="transition-delay: 0.3s;">
+                    <div class="card-glass-glow"></div>
+                    <div class="detail-icon-wrap">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                            <path d="M12 2L1 21h22L12 2zm0 3.8L20 20H4L12 5.8zM11 10h2v4h-2zm0 6h2v2h-2z"/>
+                        </svg>
+                    </div>
+                    <h3>Venue</h3>
+                    <p class="highlight">Artillery Officers Club</p>
+                    <p class="subtext">دار ضباط المدفعية · Cairo, Egypt</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION & QR CODE SECTION -->
+    <section id="location" class="qr-section">
+        <div class="container">
+            <p class="section-title reveal">Location &amp; Map</p>
+            <h2 class="section-subtitle reveal">Scan the QR code or click below to open directions in Google Maps</h2>
+
+            <div class="location-content reveal">
+                <div class="qr-card">
+                    <div id="qrcode" class="qrcode-wrapper"></div>
+                    <p class="qr-hint">Scan with your smartphone camera for instant directions</p>
+                </div>
+
+                <div class="location-details">
+                    <h3>Artillery Officers Club (دار ضباط المدفعية)</h3>
+                    <p class="address">Almaza / Cairo, Egypt</p>
+
+                    <div class="location-buttons">
+                        <a class="qr-link btn btn-primary" href="https://maps.app.goo.gl/q8xLkfdbFu9yCB8u9" target="_blank" rel="noopener">
+                            <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Open in Google Maps
+                        </a>
+
+                        <button id="copy-location-btn" class="btn btn-secondary">
+                            <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                            </svg>
+                            Copy Location Link
+                        </button>
+
+                        <button id="toggle-map-preview-btn" class="btn btn-gold">
+                            <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
+                            </svg>
+                            View Interactive Map
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Embedded Interactive Map Box -->
+            <div id="map-preview-box" class="map-preview-box hidden">
+                <iframe 
+                    title="Artillery Officers Club Location Map"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3452.8876421946896!2d31.3456!3d30.0701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e710b75dd2b%3A0x6b77299b9cf9b8ef!2z2K_Yp9ixINi22KjYp9i3INin2YTZhdiv2YHYudmK2KnZgA!5e0!3m2!1sen!2seg!4v1680000000000!5m2!1sen!2seg" 
+                    width="100%" 
+                    height="350" 
+                    style="border:0; border-radius: 16px;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- GUESTBOOK / WISHES WALL -->
+    <section id="guestbook" class="guestbook-section">
+        <div class="container">
+            <p class="section-title reveal">Wishes Wall</p>
+            <h2 class="section-subtitle reveal">Leave a warm wish to celebrate Ahmed &amp; Sama</h2>
+
+            <!-- Add Wish Form -->
+            <div class="add-wish-card reveal">
+                <form id="wish-form" class="wish-form">
+                    <div class="form-row">
+                        <input type="text" id="wish-sender" required placeholder="Your Name...">
+                        <input type="text" id="wish-message" required placeholder="Your message for Ahmed & Sama...">
+                        <button type="submit" class="btn btn-gold">
+                            <svg class="btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                            Send Wish
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Wishes Grid -->
+            <div id="wishes-grid" class="wishes-grid reveal">
+                <!-- Dynamic wishes rendered here -->
+            </div>
+
+            <p id="wishes-empty" class="wishes-empty hidden">No wishes yet — be the first to leave a message!</p>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer">
+        <div class="container">
+            <div class="ornament-line center">
+                <span class="line"></span>
+                <span class="diamond">◆</span>
+                <span class="line"></span>
+            </div>
+
+            <h2 class="footer-names">AHMED &amp; SAMA</h2>
+
+            <p class="footer-sub">
+                Thursday, August 13, 2026 &nbsp;·&nbsp; Artillery Officers Club, Cairo
+            </p>
+
+            <div class="footer-share">
+                <button id="copy-invitation-link" class="btn btn-outline btn-sm">
+                    <svg class="btn-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+                    </svg>
+                    Copy Invitation Link
+                </button>
+            </div>
+
+            <p class="copyright">Crafted with love for Ahmed &amp; Sama ✨</p>
+        </div>
+    </footer>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="confirm-modal" class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" hidden>
+        <div class="confirm-dialog">
+            <h3 id="confirm-title">Delete Wish</h3>
+            <p id="confirm-message">Are you sure you want to delete this wish?</p>
+            <div class="confirm-actions">
+                <button type="button" id="confirm-cancel" class="btn btn-secondary">Cancel</button>
+                <button type="button" id="confirm-ok" class="btn btn-gold">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- YouTube IFrame API for Perfect — Ed Sheeran -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- Main JavaScript Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
